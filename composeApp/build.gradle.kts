@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.apollo.graphql)
             implementation(libs.koin)
+            implementation(libs.koin.viewmodel)
         }
     }
 }

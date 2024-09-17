@@ -7,12 +7,32 @@ import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.jonathan.sample2024.di.countryModule
+import com.jonathan.sample2024.di.viewModelModule
 import com.jonathan.sample2024.view.tab.CountrySearchView
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinApplication
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 @Preview
 @Composable
 fun MainView() {
+    startKoin {
+        modules(
+            listOf(
+                countryModule,
+                viewModelModule
+            )
+        )
+    }
+    MaterialTheme {
+        MainViewContent()
+    }
+}
+
+@Composable
+fun MainViewContent() {
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabs = listOf("Country", "TODO 2", "TODO 3", "TODO 4")
 

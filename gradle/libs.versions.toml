@@ -15,7 +15,7 @@ compose-plugin = "1.6.11"
 junit = "4.13.2"
 kotlin = "2.0.20"
 apollo = "4.0.0"
-koin = "3.5.4"
+koin = "4.0.0-RC2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -30,7 +30,8 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 apollo-graphql = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "apollo" }
-koin = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+koin-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
