@@ -1,7 +1,7 @@
 package com.jonathan.sample2024.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.jonathan.sample2024.model.CountryEntity
+import com.jonathan.sample2024.model.countries.CountryEntity
 import com.jonathan.sample2024.repository.countries.CountryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,0 +1,8 @@
+query LaunchCheckQuery($jobTypeId: ID!) {
+    checkMaintenanceApp (job_type_id: $jobTypeId) {
+        isMaintenance
+        start_datetime
+        end_datetime
+        message
+    }
+}

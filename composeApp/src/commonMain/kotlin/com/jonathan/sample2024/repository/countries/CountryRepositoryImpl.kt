@@ -2,8 +2,8 @@ package com.jonathan.sample2024.repository.countries
 
 import com.apollographql.apollo.ApolloClient
 import com.jonathan.sample2024.graphql.countries.CountryInfoQuery
-import com.jonathan.sample2024.model.CountryEntity
-import com.jonathan.sample2024.model.LanguageEntity
+import com.jonathan.sample2024.model.countries.CountryEntity
+import com.jonathan.sample2024.model.countries.LanguageEntity
 
 class CountryRepositoryImpl: CountryRepository {
     private val apolloClient = ApolloClient.Builder()

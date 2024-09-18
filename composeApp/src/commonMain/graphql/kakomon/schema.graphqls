@@ -1,0 +1,887 @@
+"""住所"""
+type Address {
+  """都道府県"""
+  prefecture: Prefecture!
+
+  """市区町村"""
+  city: City!
+
+  """番地など"""
+  address: String!
+}
+
+"""お知らせ"""
+type Announcement {
+  """お知らせID"""
+  id: ID!
+
+  """メッセージ"""
+  message: String @deprecated(reason: "ちゃんのリストラに伴い不要")
+
+  """フォーマルメッセージ"""
+  formal_message: String
+
+  """カテゴリ"""
+  category: AnnouncementCategory
+
+  """URL"""
+  url: String
+
+  """ちゃんの画像ID"""
+  image_id: ID
+
+  """お知らせの表示開始日時"""
+  start_date: DateTime
+
+  """お知らせの表示終了日時"""
+  end_date: DateTime
+
+  """職種"""
+  jobType: JobType!
+}
+
+"""Announcement category"""
+enum AnnouncementCategory {
+  """重要なお知らせ"""
+  Important
+
+  """お知らせ"""
+  Information
+
+  """問題の更新"""
+  QuestionUpdate
+
+  """その他"""
+  Other
+}
+
+"""A paginated list of Announcement items."""
+type AnnouncementPaginator {
+  """Pagination information about the list of items."""
+  paginatorInfo: PaginatorInfo!
+
+  """A list of Announcement items."""
+  data: [Announcement!]!
+}
+
+"""回答"""
+type Answer {
+  """問題"""
+  question: Question!
+
+  """正誤"""
+  correct: Boolean!
+
+  """周回数"""
+  round: Int!
+
+  """不正解数"""
+  incorrect_count: Int!
+}
+
+"""A paginated list of Answer items."""
+type AnswerPaginator {
+  """Pagination information about the list of items."""
+  paginatorInfo: PaginatorInfo!
+
+  """A list of Answer items."""
+  data: [Answer!]!
+}
+
+"""付箋"""
+type Bookmark {
+  """問題"""
+  question: Question!
+}
+
+"""A paginated list of Bookmark items."""
+type BookmarkPaginator {
+  """Pagination information about the list of items."""
+  paginatorInfo: PaginatorInfo!
+
+  """A list of Bookmark items."""
+  data: [Bookmark!]!
+}
+
+"""市区町村"""
+type City {
+  """市区町村ID"""
+  id: ID!
+
+  """名前"""
+  name: String!
+}
+
+"""求人サイトユーザーと連携処理の入力項目"""
+input ConnectUserInput {
+  """職種ID"""
+  job_type_id: ID!
+
+  """求人サイトの認証トークン"""
+  guppyjp_token: String!
+
+  """国試バックエンドの認証トークン (匿名ユーザー登録済みの場合)"""
+  token: String
+}
+
+"""求人サイト連携ユーザー移行処理のレスポンス"""
+type ConnectUserResponse {
+  """国試バックエンドの認証トークン"""
+  token: String
+
+  """サポートID"""
+  support_id: ID!
+
+  """求人サイトのユーザーID"""
+  guppyjp_uid: ID!
+}
+
+"""匿名ユーザー作成処理の入力項目"""
+input CreateAnonymousUserInput {
+  """職種ID"""
+  job_type_id: ID!
+}
+
+"""匿名ユーザー作成処理のレスポンス"""
+type CreateAnonymousUserResponse {
+  """認証トークン"""
+  token: String
+
+  """サポートID"""
+  support_id: ID!
+}
+
+"""回答作成の入力項目"""
+input CreateAnswerInput {
+  """問題ID"""
+  question_id: ID!
+
+  """問題選択肢ID"""
+  option_ids: [ID]
+
+  """経過時間(秒)"""
+  elapsed_time: Int!
+}
+
+"""求人サイト希望条件の入力項目"""
+input CreateGuppyjpUserConditionInput {
+  job_type: Int!
+  prefecture_id: Int!
+  important1: Int!
+  important2: Int!
+  important3: Int!
+}
+
+"""求人サイト学歴の入力項目"""
+input CreateGuppyjpUserEducationalRecordInput {
+  school_name: String!
+  graduated_year: String!
+}
+
+"""求人サイトユーザー作成エラーメッセージ"""
+type CreateGuppyjpUserErrorMessage {
+  key: String!
+  message: String
+}
+
+"""求人サイト連携ユーザー作成処理の入力項目"""
+input CreateGuppyjpUserInput {
+  """職種ID"""
+  job_type_id: ID!
+
+  """国試バックエンドの認証トークン (匿名ユーザー登録済みの場合)"""
+  token: String
+
+  """求人サイトユーザー情報の入力項目"""
+  user: CreateGuppyjpUserUserInput!
+
+  """求人サイト希望条件の入力項目"""
+  condition: CreateGuppyjpUserConditionInput!
+
+  """求人サイト学歴の入力項目"""
+  educational_record: CreateGuppyjpUserEducationalRecordInput!
+}
+
+"""求人サイト連携ユーザー作成処理のレスポンス"""
+type CreateGuppyjpUserResponse {
+  """国試バックエンドの認証トークン"""
+  token: String
+
+  """サポートID"""
+  support_id: ID
+
+  """求人サイトの認証トークン"""
+  guppyjp_token: String
+
+  """求人サイトのユーザーID"""
+  guppyjp_uid: ID
+
+  """ユーザー作成ステータス"""
+  status: CreateGuppyjpUserStatus!
+
+  """エラーメッセージ"""
+  errorMessages: [CreateGuppyjpUserErrorMessage!]
+}
+
+"""ログインステータス"""
+enum CreateGuppyjpUserStatus {
+  SUCCESS
+  FAILURE
+}
+
+"""求人サイトユーザー情報の入力項目"""
+input CreateGuppyjpUserUserInput {
+  mail: String!
+  name: String!
+  sex: Int!
+  scout: Int!
+  ruby: String!
+  birthday: String!
+  password: String!
+  zip_code: String!
+  prefecture: Int!
+  city: Int!
+  town: String!
+  building: String
+  phone: String!
+  hope_mail_magazine_flag: Int!
+}
+
+"""A date string with format `Y-m-d`, e.g. `2011-05-23`."""
+scalar Date
+
+"""
+A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`.
+"""
+scalar DateTime
+
+"""ユーザー削除のレスポンス"""
+type DeleteUserResponse {
+  """ユーザー削除のステータス"""
+  status: DeleteUserStatus!
+}
+
+"""ユーザー削除ステータス"""
+enum DeleteUserStatus {
+  SUCCESS
+}
+
+"""重要視すること"""
+type Important {
+  """重要視することID"""
+  id: ID!
+
+  """重要視すること内容"""
+  name: String!
+}
+
+"""職種"""
+type JobType {
+  """職種ID"""
+  id: ID!
+
+  """職種名"""
+  name: String!
+
+  """職種省略名"""
+  slug: String!
+}
+
+"""ログインの入力項目"""
+input LoginInput {
+  """ログインID"""
+  login_id: String!
+
+  """パスワード"""
+  password: String!
+}
+
+"""ログインのレスポンス"""
+type LoginResponse {
+  """求人サイトの認証トークン"""
+  token: String
+
+  """ログインのステータス"""
+  status: LoginStatus!
+}
+
+"""ログインステータス"""
+enum LoginStatus {
+  SUCCESS
+  FAILURE
+}
+
+"""メンテナンス"""
+type MaintenanceApp {
+  """メンテナンスID"""
+  id: ID!
+
+  """職種"""
+  jobType: JobType!
+
+  """メンテナンス判定"""
+  isMaintenance: Boolean!
+
+  """開始日"""
+  start_datetime: DateTime
+
+  """終了日"""
+  end_datetime: DateTime
+
+  """メッセージ"""
+  message: String
+}
+
+type Mutation {
+  """匿名ユーザーから求人サイト連携ユーザーへ移行処理を行う"""
+  connectUser(input: ConnectUserInput!): ConnectUserResponse!
+
+  """匿名ユーザー作成処理"""
+  createAnonymousUser(input: CreateAnonymousUserInput!): CreateAnonymousUserResponse!
+
+  """回答の作成"""
+  createAnswer(input: CreateAnswerInput!): Answer!
+
+  """付箋の作成"""
+  createBookmark(question_id: ID!): Bookmark!
+
+  """求人サイト連携ユーザーの作成処理"""
+  createGuppyjpUser(input: CreateGuppyjpUserInput!): CreateGuppyjpUserResponse!
+
+  """付箋を削除する"""
+  deleteBookmark(question_id: ID!): Bookmark
+
+  """ユーザーを削除する"""
+  deleteUser(guppyjp_token: String): DeleteUserResponse!
+
+  """求人サイトのログイン"""
+  login(input: LoginInput!): LoginResponse!
+}
+
+"""Allows ordering a list of records."""
+input OrderByClause {
+  """The column that is used for ordering."""
+  column: String!
+
+  """The direction that is used for ordering."""
+  order: SortOrder!
+}
+
+"""
+Aggregate functions when ordering by a relation without specifying a column.
+"""
+enum OrderByRelationAggregateFunction {
+  """Amount of items."""
+  COUNT
+}
+
+"""
+Aggregate functions when ordering by a relation that may specify a column.
+"""
+enum OrderByRelationWithColumnAggregateFunction {
+  """Average."""
+  AVG
+
+  """Minimum."""
+  MIN
+
+  """Maximum."""
+  MAX
+
+  """Sum."""
+  SUM
+
+  """Amount of items."""
+  COUNT
+}
+
+"""Information about pagination using a Relay style cursor connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """The cursor to continue paginating backwards."""
+  startCursor: String
+
+  """The cursor to continue paginating forwards."""
+  endCursor: String
+
+  """Total number of nodes in the paginated connection."""
+  total: Int!
+
+  """Number of nodes in the current page."""
+  count: Int!
+
+  """Index of the current page."""
+  currentPage: Int!
+
+  """Index of the last available page."""
+  lastPage: Int!
+}
+
+"""Information about pagination using a fully featured paginator."""
+type PaginatorInfo {
+  """Number of items in the current page."""
+  count: Int!
+
+  """Index of the current page."""
+  currentPage: Int!
+
+  """Index of the first item in the current page."""
+  firstItem: Int
+
+  """Are there more pages after this one?"""
+  hasMorePages: Boolean!
+
+  """Index of the last item in the current page."""
+  lastItem: Int
+
+  """Index of the last available page."""
+  lastPage: Int!
+
+  """Number of items per page."""
+  perPage: Int!
+
+  """Number of total available items."""
+  total: Int!
+}
+
+"""ポップアップバナー"""
+type PopupBanner {
+  """ポップアップバナーID"""
+  id: ID
+
+  """画像URL"""
+  image_url: String
+
+  """URL"""
+  url: String
+
+  """ボタンのメッセージ"""
+  button_message: String
+
+  """バナーの表示開始日時"""
+  start_date: DateTime
+
+  """バナーの表示終了日時"""
+  end_date: DateTime
+
+  """職種"""
+  jobType: JobType!
+}
+
+"""都道府県"""
+type Prefecture {
+  """都道府県ID"""
+  id: ID!
+
+  """名前"""
+  name: String!
+}
+
+type Query {
+  searchAddress(zip_code: String!): Address
+
+  """ちゃんのお知らせを取得する (ちゃん用のメッセージがあり、有効期限内のみ)"""
+  announcement: Announcement @deprecated(reason: "ちゃんのリストラに伴い不要")
+
+  """正解数を取得する"""
+  allCorrectCount: Int!
+
+  """周回数ごとの正解数を取得する"""
+  roundCorrectCount: [RoundCorrectCount!]
+
+  """市区町村検索"""
+  searchCity(prefecture_id: ID!): [City!]
+
+  """重要視すること一覧を取得"""
+  important: [Important!]!
+
+  """全職種を取得する"""
+  jobTypes: [JobType!]!
+
+  """職種IDから職種を取得する"""
+  jobType(id: ID!): JobType!
+
+  """メンテナンス状態のチェック"""
+  checkMaintenanceApp(job_type_id: ID!): MaintenanceApp
+
+  """求人サイトのメッセージ件数を取得する"""
+  messageCount(token: String!): Int!
+
+  """ポップアップバナーを取得する (有効期限内のみ)"""
+  popupBanner: PopupBanner
+
+  """ポップアップバナー一覧を取得する (有効期限内のみ)"""
+  popupBanners: [PopupBanner!]
+
+  """都道府県一覧を取得"""
+  prefectures: [Prefecture!]!
+
+  """
+  問題総数
+  ユーザーが選択した職種と有効年度に紐づく問題のみ
+  """
+  allQuestionCount: Int!
+
+  """ユーザーの進捗から次の問題を取得する"""
+  nextQuestion: Question
+
+  """条件に合致した問題を取得する"""
+  searchQuestion(input: SearchQuestionInput!): [Question!]
+
+  """問題IDから問題を取得する"""
+  searchQuestionById(id: ID!): Question!
+
+  """
+  新卒アクティブ年度を取得する
+  `job_type_id` に紐づく職種の現在アクティブな年度を取得
+  """
+  recruitActiveYear(job_type_id: ID!): [RecruitActiveYear!]
+
+  """
+  学校を取得する
+  `job_type_id` に紐づく学校のみ
+  """
+  schools(job_type_id: ID!): [School!]!
+
+  """
+  科目を取得する
+  ユーザーが選択した職種と有効年度に紐づく科目のみ
+  """
+  sections: [Section!]!
+
+  """
+  年度を取得する
+  ユーザーの有効範囲の年度のみ
+  そのため匿名ユーザーと求人サイト連携ユーザーで取得できる年度が異なる
+  ※共通問題の年度は返さない
+  """
+  terms: [Term!]
+
+  """
+  有効年度の数を取得する
+  ※前期/後期は1年度としてカウント
+  ※共通問題の年度は含めない
+  """
+  termCount: Int!
+
+  """国試の試験日を取得する"""
+  testDay: TestDay
+
+  """求人サイトとの連携状態の確認"""
+  existsGuppyjpUser(token: String!): Boolean!
+
+  """現在の周回数を取得する"""
+  currentRound: Int!
+
+  """メールアドレスの重複チェック"""
+  validateMail(mail: String!): Boolean!
+
+  """電話番号の重複チェック"""
+  validateTel(tel: String!): Boolean!
+
+  """バージョンチェック"""
+  version(input: VersionInput!): Version!
+
+  """お知らせ一覧を取得する (有効期限以外も含む)"""
+  announcements(
+    """Limits number of fetched items."""
+    first: Int!
+
+    """The offset from which items are returned."""
+    page: Int
+  ): AnnouncementPaginator
+
+  """不正解の回答を取得する"""
+  incorrectAnswers(
+    """Limits number of fetched items."""
+    first: Int!
+
+    """The offset from which items are returned."""
+    page: Int
+  ): AnswerPaginator
+
+  """付箋を取得する"""
+  bookmarks(
+    """Limits number of fetched items."""
+    first: Int!
+
+    """The offset from which items are returned."""
+    page: Int
+  ): BookmarkPaginator
+}
+
+"""問題"""
+type Question {
+  """問題ID"""
+  id: ID!
+
+  """問題番号"""
+  title: String!
+
+  """問題文"""
+  question: String!
+
+  """解説"""
+  explanation: String!
+
+  """科目"""
+  section: Section!
+
+  """年度"""
+  term: Term!
+
+  """
+  試験実施日
+  （歯科医師・薬剤師・精神保健福祉士・保育士のみ）
+  """
+  schedule: Schedule
+
+  """時間帯"""
+  timeframe: Timeframe!
+
+  """問題選択肢"""
+  options: [QuestionOption!]!
+
+  """最終問題"""
+  isLast: Boolean!
+
+  """付箋済み"""
+  isBookmark: Boolean!
+
+  """正答率"""
+  correctRate: Int
+}
+
+"""問題選択肢"""
+type QuestionOption {
+  """問題選択肢ID"""
+  id: ID!
+
+  """問題"""
+  question: Question!
+
+  """選択肢インデックス"""
+  label: String!
+
+  """選択肢"""
+  answer: String!
+
+  """正解フラグ"""
+  correct: Boolean!
+}
+
+"""新卒アクティブ年度"""
+type RecruitActiveYear {
+  """年度ID"""
+  id: ID!
+
+  """年度"""
+  year: String!
+
+  """メイン年度フラグ"""
+  main_flag: Boolean!
+}
+
+"""周回数ごとの正解数"""
+type RoundCorrectCount {
+  """周回数"""
+  round: Int!
+
+  """正解数"""
+  correct_count: Int!
+}
+
+"""試験実施日"""
+type Schedule {
+  """試験実施日ID"""
+  id: ID!
+
+  """名称"""
+  name: String!
+}
+
+"""学校"""
+type School {
+  """学校ID"""
+  id: ID!
+
+  """学校名"""
+  name: String!
+
+  """学校名（カナ）"""
+  kana: String!
+
+  """職種"""
+  jobType: JobType!
+}
+
+"""問題検索入力項目"""
+input SearchQuestionInput {
+  """年度ID (配列)"""
+  term_ids: [ID!]
+
+  """科目ID (配列)"""
+  section_ids: [ID!]
+
+  """キーワード（配列、AND検索）"""
+  keywords: [String]
+
+  """不正解数"""
+  incorrect_count: Int
+
+  """付箋済み"""
+  is_bookmark: Boolean
+
+  """正答率（0~100、min~maxの範囲検索）"""
+  min_correct_rate: Int
+
+  """正答率（0~100、min~maxの範囲検索）"""
+  max_correct_rate: Int
+}
+
+"""科目"""
+type Section {
+  """科目ID"""
+  id: ID!
+
+  """科目名"""
+  name: String!
+
+  """この科目の問題数"""
+  questionCount: Int!
+
+  """この科目の正解数"""
+  correctCount: Int!
+
+  """職種"""
+  jobType: JobType!
+}
+
+"""Information about pagination using a simple paginator."""
+type SimplePaginatorInfo {
+  """Number of items in the current page."""
+  count: Int!
+
+  """Index of the current page."""
+  currentPage: Int!
+
+  """Index of the first item in the current page."""
+  firstItem: Int
+
+  """Index of the last item in the current page."""
+  lastItem: Int
+
+  """Number of items per page."""
+  perPage: Int!
+
+  """Are there more pages after this one?"""
+  hasMorePages: Boolean!
+}
+
+"""Directions for ordering a list of records."""
+enum SortOrder {
+  """Sort records in ascending order."""
+  ASC
+
+  """Sort records in descending order."""
+  DESC
+}
+
+"""年度"""
+type Term {
+  """年度ID"""
+  id: ID!
+
+  """年度名"""
+  name: String!
+
+  """年度"""
+  year: Int!
+
+  """職種"""
+  jobType: JobType!
+}
+
+"""試験日"""
+type TestDay {
+  """表示形式 `month` `day` のどちらか"""
+  display_type: String!
+
+  """試験日"""
+  test_day: Date!
+
+  """職種"""
+  jobType: JobType!
+}
+
+"""時間帯"""
+type Timeframe {
+  """時間帯ID"""
+  id: ID!
+
+  """名称"""
+  name: String!
+}
+
+"""
+Specify if you want to include or exclude trashed results from a query.
+"""
+enum Trashed {
+  """Only return trashed results."""
+  ONLY
+
+  """Return both trashed and non-trashed results."""
+  WITH
+
+  """Only return non-trashed results."""
+  WITHOUT
+}
+
+"""バージョンチェック"""
+type Version {
+  """
+  モバイルアプリのバージョン番号
+  1: 歯科衛生士[dh]
+  2: 歯科医師[dds]
+  3: 歯科技工士[dt]
+  4: 管理栄養士[nrd]
+  5: 柔道整復師[jdr]
+  6: 看護師[ns]
+  7: 薬剤師[apo]
+  8: 理学療法士[pt]
+  9: 作業療法士[ot]
+  10: 言語聴覚士[st]
+  11: 介護福祉士[ccw]
+  12: 社会福祉士[csw]
+  13: 鍼灸師[acu]
+  14: マッサージ師[mas]
+  15: 登録販売者[otc]
+  16: 保育士[cw]
+  17: 精神保健福祉士[psw]
+  """
+  app_version: String!
+
+  """バックエンドAPIのバージョン番号"""
+  api_version: String!
+
+  """モバイルアプリの強制アップグレードフラグ"""
+  force_upgrade: Boolean!
+}
+
+"""バージョン情報入力項目"""
+input VersionInput {
+  """アプリID"""
+  app_id: ID!
+
+  """デバイス種類"""
+  device: String!
+
+  """バージョン"""
+  app_version: String!
+}
+

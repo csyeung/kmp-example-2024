@@ -88,12 +88,24 @@ android {
 
 apollo {
     service("countries") {
+        srcDir("src/commonMain/graphql/countries")
         packageName.set("com.jonathan.sample2024.graphql.countries")
         introspection {
-            endpointUrl.set("https://countries.trevorblades.com/graphql")
+            endpointUrl.set("https://review.kakomon.me/graphql")
             schemaFile.set(file("src/commonMain/graphql/countries/schema.graphqls"))
         }
-        generateOptionalOperationVariables.set(false)
+        generateApolloMetadata.set(true)
+        alwaysGenerateTypesMatching.set(listOf(".*"))
+    }
+    service("kakomon") {
+        srcDir("src/commonMain/graphql/kakomon")
+        packageName.set("com.jonathan.sample2024.graphql.kakomon")
+        introspection {
+            endpointUrl.set("https://review.kakomon.me/graphql")
+            schemaFile.set(file("src/commonMain/graphql/kakomon/schema.graphqls"))
+        }
+        generateApolloMetadata.set(true)
+        alwaysGenerateTypesMatching.set(listOf(".*"))
     }
 }
 

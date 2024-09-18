@@ -1,4 +1,4 @@
-package com.jonathan.sample2024.model
+package com.jonathan.sample2024.model.countries
 
 data class CountryEntity(
     val emoji: String,

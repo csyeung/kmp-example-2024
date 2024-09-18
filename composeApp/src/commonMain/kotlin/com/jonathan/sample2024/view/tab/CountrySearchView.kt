@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.jonathan.sample2024.model.CountryEntity
+import com.jonathan.sample2024.model.countries.CountryEntity
 import com.jonathan.sample2024.viewModel.CountryViewModel
 import kotlinx.coroutines.runBlocking
 import org.koin.compose.viewmodel.koinViewModel

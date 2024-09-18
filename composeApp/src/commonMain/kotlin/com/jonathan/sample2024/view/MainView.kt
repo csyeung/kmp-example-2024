@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.jonathan.sample2024.di.countryModule
 import com.jonathan.sample2024.di.viewModelModule
 import com.jonathan.sample2024.view.tab.CountrySearchView
+import com.jonathan.sample2024.view.tab.KakomonView
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.core.context.startKoin
@@ -34,7 +35,7 @@ fun MainView() {
 @Composable
 fun MainViewContent() {
     var selectedTabIndex by remember { mutableStateOf(0) }
-    val tabs = listOf("Country", "TODO 2", "TODO 3", "TODO 4")
+    val tabs = listOf("Country", "TODO 2", "TODO 3", "国試")
 
     Column(Modifier.fillMaxSize()) {
         TabRow(
@@ -60,7 +61,7 @@ fun MainViewContent() {
             0 -> CountrySearchView()
             1 -> TabContent("Content for Tab 2")
             2 -> TabContent("Content for Tab 3")
-            3 -> TabContent("Content for Tab 4")
+            3 -> KakomonView()
         }
     }
 }
