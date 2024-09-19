@@ -49,7 +49,9 @@ fun KakomonView() {
             onClick = {
                 runBlocking {
                     viewModel.getMaintenanceInfo(
-                        jobTypeId = jobTypeText.text
+                        jobTypeId = jobTypeText.text,
+                        null,
+                        null
                     )
                 }
             },
@@ -79,6 +81,31 @@ fun LaunchEntityResultView(entity: LaunchCheckEntity) {
             Text(
                 text = "Force Update",
                 style = MaterialTheme.typography.h4,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+        }
+    }
+
+    entity.jobTypeData.forEach {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Text(
+                text = it.name,
+                style = MaterialTheme.typography.h5,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text(
+                text = it.id,
+                style = MaterialTheme.typography.h5,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text(
+                text = it.slug,
+                style = MaterialTheme.typography.h5,
                 modifier = Modifier.padding(end = 8.dp)
             )
         }

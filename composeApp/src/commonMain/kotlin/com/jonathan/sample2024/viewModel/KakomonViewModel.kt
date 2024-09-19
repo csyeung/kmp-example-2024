@@ -1,6 +1,7 @@
 package com.jonathan.sample2024.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.jonathan.sample2024.model.kakomon.JobTypeEntity
 import com.jonathan.sample2024.model.kakomon.LaunchCheckEntity
 import com.jonathan.sample2024.repository.kakomon.KakomonRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,10 +14,12 @@ class KakomonViewModel : ViewModel(), KoinComponent {
     val _launchCheck = MutableStateFlow<LaunchCheckEntity?>(null)
     val launchCheck: StateFlow<LaunchCheckEntity?> = _launchCheck
 
-    suspend fun getMaintenanceInfo(jobTypeId: String) {
+    suspend fun getMaintenanceInfo(jobTypeId: String, mailAddress: String?, phoneNumber: String?) {
         try {
             _launchCheck.value = kakomonRepository.getMaintenanceInfo(
-                jobTypeId = jobTypeId
+                jobTypeId = jobTypeId,
+                mailAddress ?: "-",
+                phoneNumber ?: "-"
             )
         } catch (e: Exception) {
             e.printStackTrace()

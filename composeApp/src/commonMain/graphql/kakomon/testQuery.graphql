@@ -1,8 +1,15 @@
-query LaunchCheckQuery($jobTypeId: ID!) {
+query LaunchCheckQuery($jobTypeId: ID!, $mail: String!, $phoneNo: String!) {
     checkMaintenanceApp (job_type_id: $jobTypeId) {
         isMaintenance
         start_datetime
         end_datetime
         message
+    }
+    validateMail(mail: $mail)
+    validateTel(tel: $phoneNo)
+    jobTypes {
+        id
+        name
+        slug
     }
 }
