@@ -24,6 +24,6 @@ fun GoogleBooksView() {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = display ?: "No data")
+        Text(text = display?.kind ?: "No data")
     }
 }

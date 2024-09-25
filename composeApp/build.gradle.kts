@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.apollo)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -47,6 +48,7 @@ kotlin {
             implementation(libs.koin)
             implementation(libs.koin.viewmodel)
             implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.serialization.json)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
