@@ -1,7 +1,6 @@
 package com.jonathan.sample2024.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.jonathan.sample2024.model.kakomon.JobTypeEntity
 import com.jonathan.sample2024.model.kakomon.LaunchCheckEntity
 import com.jonathan.sample2024.repository.kakomon.KakomonRepository
 import kotlinx.coroutines.flow.MutableStateFlow

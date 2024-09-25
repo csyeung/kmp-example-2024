@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -86,28 +88,32 @@ fun LaunchEntityResultView(entity: LaunchCheckEntity) {
         }
     }
 
-    entity.jobTypeData.forEach {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Text(
-                text = it.name,
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text(
-                text = it.id,
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text(
-                text = it.slug,
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(end = 8.dp)
-            )
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        items(entity.jobTypeData) { jobType ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Text(
+                    text = jobType.name,
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = jobType.id,
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = jobType.slug,
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
         }
     }
 }

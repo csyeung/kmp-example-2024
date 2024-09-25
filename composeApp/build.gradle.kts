@@ -45,6 +45,8 @@ kotlin {
             implementation(libs.apollo.graphql)
             implementation(libs.koin)
             implementation(libs.koin.viewmodel)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
         }
     }
 }
