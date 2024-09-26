@@ -21,8 +21,10 @@ data class VolumeInfo(
     @SerialName("authors") val authors: List<String>? = null,
     val publisher: String? = null,
     val publishedDate: String,
-    val pageCount: Int,
+    val pageCount: Int? = 0,
     val printType: String,
+    val description: String? = null,
+    val imageLinks: ImageLinks? = null,
     val maturityRating: String,
     val allowAnonLogging: Boolean,
     val contentVersion: String,
@@ -61,4 +63,10 @@ data class SearchInfo(
 @Serializable
 data class Availability(
     val isAvailable: Boolean,
+)
+
+@Serializable
+data class ImageLinks(
+    val smallThumbnail: String,
+    val thumbnail: String
 )
